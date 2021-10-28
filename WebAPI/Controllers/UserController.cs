@@ -16,20 +16,22 @@ namespace WebAPI.Controllers
     {
 
 
-        //[HttpGet]
-        //public IEnumerable<User> Get()
-        //{
-        //    var items = new List<User>();
-        //    using (StreamReader r = new StreamReader("data/user.json"))
-        //    {
-        //        string json = r.ReadToEnd();
-        //        items = JsonConvert.DeserializeObject<List<User>>(json);
-        //    }
-        //    return items;
-        //}
-
         [HttpGet]
-        public ActionResult<User> GetUserById ([ FromQueryAttribute ]  int ID)
+        public IEnumerable<User> Get()
+        {
+            var items = new List<User>();
+            using (StreamReader r = new StreamReader("data/user.json"))
+            {
+                string json = r.ReadToEnd();
+                items = JsonConvert.DeserializeObject<List<User>>(json);
+            }
+            return items;
+        }
+
+        [HttpGet("{ID}")]
+      
+       // public IActionResult GetUserById ([ FromQueryAttribute ]  int ID)
+        public IActionResult GetUserById (int ID)
         {
             var users = new List<User>();
             using (StreamReader r = new StreamReader("data/user.json"))
@@ -41,10 +43,10 @@ namespace WebAPI.Controllers
             {
                 if (user.ID==ID)
                 {
-                    return user;
+                    return Ok(user);
                 }
             }
-            return null;
+            return NotFound();
         }
     }
 }
