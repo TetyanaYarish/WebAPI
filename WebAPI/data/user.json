@@ -1,21 +1,17 @@
 [
   {
-    "ID": "1",
     "Name": "azadeh",
     "familyname": "Hassanzadeh",
     "age": 40
   },
   {
-    "ID": "2",
     "Name": "tanya",
     "familyname": "Yarish",
     "age": 40
   },
   {
-    "ID": "3",
     "Name": "A",
     "familyname": "B",
     "age": 10
   }
-
 ]
