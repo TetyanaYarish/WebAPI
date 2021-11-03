@@ -1,81 +1,96 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
-using Newtonsoft;
 using Newtonsoft.Json;
-using System.Xml.Linq;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace WebAPI.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
-        List<User> nUser = new List<User>();
-
+        string path = "data/user.json";
         [HttpGet]
         public IEnumerable<User> Get()
         {
-
-            using (StreamReader r = new StreamReader("data/user.json"))
+            var users = new List<User>();
+            using (StreamReader r = new StreamReader(path))
             {
                 string json = r.ReadToEnd();
-                nUser = JsonConvert.DeserializeObject<List<User>>(json);
+                users = JsonConvert.DeserializeObject<List<User>>(json);
             }
-            return nUser;
+            return users;
         }
 
         [HttpGet("{ID}")]
-
-        // public IActionResult GetUserById ([ FromQueryAttribute ]  int ID)
         public IActionResult GetUserById(int ID)
         {
-
-            using (StreamReader r = new StreamReader("data/user.json"))
+            var users = new List<User>();
+            using (StreamReader r = new StreamReader(path))
             {
                 string json = r.ReadToEnd();
-                nUser = JsonConvert.DeserializeObject<List<User>>(json);
+                users = JsonConvert.DeserializeObject<List<User>>(json);
             }
-            foreach (var user in nUser)
+
+            foreach (var user in users)
             {
+                System.IO.File.ReadAllText(path);
                 if (user.ID == ID)
-                {
+                {  
+                    string json2 = JsonConvert.SerializeObject(users, Formatting.Indented);
+
                     return Ok(user);
                 }
             }
             return NotFound();
         }
         [HttpPost]
-        public async Task<User> PostAsync(User newUser) //Not 
+        public async Task<User> PostAsync(User newUser)
         {
-            //using (StringReader r = new StringReader("data/newUser.json"))
-            //{
-            //    string json = r.ReadToEnd();
-            //    nUser = JsonConvert.DeserializeObject<List<User>>(json);
-            //}
-            //foreach (var user in nUser)
-            //{
-               
 
-                nUser.Add(new User()
+            var users = new List<User>();
+            using (StreamReader r = new StreamReader(path))
+            {
+
+                string json = JsonConvert.SerializeObject(users, Formatting.Indented);
+                string json1 = r.ReadToEnd();
+                users = JsonConvert.DeserializeObject<List<User>>(json1);
+                if (users == null)
                 {
-                    ID = newUser.ID,
-                    Name = newUser.Name,
-                    FamilyName = newUser.FamilyName,
-                    Age = newUser.Age
-                });
-                string json = JsonConvert.SerializeObject(nUser.ToArray());
-                //string jsonData = JsonConvert.SerializeObject(json, Formatting.None);
-              System.IO.File.WriteAllText(@"C:\Users\User\Desktop\Work\Week 20\WebAPI\WebAPI\data\newUsers.json", json);
+                    await System.IO.File.WriteAllTextAsync(path, json);
+                    users.Add(newUser);
+                }
+                users.Add(newUser);
+            }
+
+            string json2 = JsonConvert.SerializeObject(users, Formatting.Indented);
+            await System.IO.File.WriteAllTextAsync(path, json2);
             return newUser;
         }
-          
-           
+
+        [HttpDelete("{ID}")]
+        public async Task<ActionResult<List<User>>> DeleteUser(int ID)
+
+        {
+            var users = new List<User>();
+            using (StreamReader r = new StreamReader(path))
+            {
+                string json = r.ReadToEnd();
+                users = JsonConvert.DeserializeObject<List<User>>(json);
+            }
+            foreach (var user in users)
+            {
+                if (user.ID == ID)
+                {
+                    users.Remove(user);
+                    string json2 = JsonConvert.SerializeObject(users, Formatting.Indented);
+                    await System.IO.File.WriteAllTextAsync(path, json2);
+
+                }
+            }
+            return NotFound();
         }
     }
+}

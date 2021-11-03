@@ -1,0 +1,110 @@
+﻿            //using (StringReader r = new StringReader("data/newUser.json"))
+            //{
+            //    string json = r.ReadToEnd();
+            //    nUser = JsonConvert.DeserializeObject<List<User>>(json);
+            //}
+            //foreach (var user in nUser)
+            //{
+
+
+            //nUser.Add(new User()
+            //{
+            //    ID = newUser.ID,
+            //    Name = newUser.Name,
+            //    FamilyName = newUser.FamilyName,
+            //    Age = newUser.Age
+            //});
+          
+            string json = JsonConvert.SerializeObject(newUser, Formatting.Indented);
+            nUser.Add(newUser);
+            //{
+            //    ID = newUser.ID,
+            //    Name = newUser.Name,
+            //    FamilyName = newUser.FamilyName,
+            //    Age = newUser.Age
+            //});
+            //string jsonData = JsonConvert.SerializeObject(json, Formatting.None);
+
+[
+  {
+    "ID": 21,
+    "Name": "string",
+    "FamilyName": "string",
+    "Age": 40
+  },
+  {
+    "ID": 0,
+    "Name": "string",
+    "FamilyName": "string",
+    "Age": 0
+  },
+  {
+    "ID": 0,
+    "Name": "string",
+    "FamilyName": "string",
+    "Age": 0
+  },
+  {
+    "ID": 5,
+    "Name": "string",
+    "FamilyName": "string",
+    "Age": 0
+  },
+  {
+    "ID": 5,
+    "Name": "string",
+    "FamilyName": "string",
+    "Age": 0
+  }
+]
+
+***  /*
+        [HttpPost]
+        public async Task<User> PostAsync(User newUser)
+        {
+            var users = new List<User>();
+            string json = JsonConvert.SerializeObject(users, Formatting.Indented);
+            if (users.Count ==0)
+            {
+                 json = JsonConvert.SerializeObject(users, Formatting.Indented);
+                await System.IO.File.WriteAllTextAsync(path, json);
+                users.Add(newUser);
+            }
+            //using (StreamReader r = new StreamReader(path))
+            //{
+            //    string json1 = r.ReadToEnd();
+            //    users = JsonConvert.DeserializeObject<List<User>>(json1);
+            //}
+          
+            users.Add(newUser);
+         
+        [HttpDelete("{ID}")]
+        public async Task<ActionResult<List<User>>> DeleteUser(int ID)
+        {
+            var users = new List<User>();
+            using (StringReader r = new StringReader(path))
+            {
+                string json1 = r.ReadToEnd();
+                for (int i = 0; i < users.Count; i++)
+                {
+                    if (users[i].ID == ID)
+                    {
+                        users.Remove(users[i]);
+                        // return Ok(users);
+                    }
+                }
+                //  users = JsonConvert.DeserializeObject<List<User>>(json1);
+            }
+
+            //for (int i = 0; i < users.Count; i++)
+            //{
+            //    if (users[i].ID == ID)
+            //    {
+            //        users.Remove(users[i]);
+            //       // return Ok(users);
+            //    }
+            //}
+            string json = JsonConvert.SerializeObject(ID, Formatting.Indented);
+            await System.IO.File.WriteAllTextAsync(path, json);
+            return List<User>;
+        ***
