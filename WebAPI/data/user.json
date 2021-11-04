@@ -6,33 +6,15 @@
     "Age": 0
   },
   {
-    "ID": 1,
-    "Name": "string",
-    "FamilyName": "string",
+    "ID": 0,
+    "Name": null,
+    "FamilyName": null,
     "Age": 0
   },
   {
-    "ID": 1,
-    "Name": "string",
-    "FamilyName": "string",
-    "Age": 0
-  },
-  {
-    "ID": 1,
-    "Name": "string",
-    "FamilyName": "string",
-    "Age": 0
-  },
-  {
-    "ID": 21,
-    "Name": "string",
-    "FamilyName": "string",
-    "Age": 0
-  },
-  {
-    "ID": 21,
-    "Name": "string",
-    "FamilyName": "string",
+    "ID": 0,
+    "Name": null,
+    "FamilyName": null,
     "Age": 0
   }
 ]

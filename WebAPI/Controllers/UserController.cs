@@ -57,11 +57,14 @@ namespace WebAPI.Controllers
                 string jsonRead = r.ReadToEnd();
                 users = JsonConvert.DeserializeObject<List<User>>(jsonRead);
             }
+            users.Add(new User());
+            string json1 = JsonConvert.SerializeObject(users.ToArray(), Formatting.Indented); //json read new user
+            System.IO.File.WriteAllText(path, json1);//json file was created
             users.Add(newUser);
-            string json = JsonConvert.SerializeObject(users, Formatting.Indented);
-            await System.IO.File.WriteAllTextAsync(path, json);
+          
             return newUser;
         }
+
         [HttpDelete("{ID}")]
         public async Task<ActionResult<List<User>>> DeleteUser(int ID)
 
