@@ -1,20 +1,14 @@
 [
   {
-    "ID": 0,
-    "Name": null,
-    "FamilyName": null,
+    "ID": 2,
+    "Name": "string",
+    "FamilyName": "string",
     "Age": 0
   },
   {
-    "ID": 0,
-    "Name": null,
-    "FamilyName": null,
-    "Age": 0
-  },
-  {
-    "ID": 0,
-    "Name": null,
-    "FamilyName": null,
+    "ID": 3,
+    "Name": "string",
+    "FamilyName": "string",
     "Age": 0
   }
 ]
