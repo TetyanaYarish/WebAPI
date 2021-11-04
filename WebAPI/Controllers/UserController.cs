@@ -13,7 +13,9 @@ namespace WebAPI.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+        List<User> allUsers = new List<User>();
         string path = "data/user.json";
+ 
         [HttpGet]
         public IEnumerable<User> Get()
         {
@@ -78,9 +80,6 @@ namespace WebAPI.Controllers
             }
             foreach (var user in users)
             {
-                bool isSuccsesfull = users.Remove(user);
-                string json2 = JsonConvert.SerializeObject(users, Formatting.Indented);
-                 System.IO.File.WriteAllTextAsync(path, json2);
                 if (user.ID == ID)
                 {
                     users.Remove(user);
@@ -89,7 +88,7 @@ namespace WebAPI.Controllers
                     return Ok(user);
 
                 }
-                else
+                else if(user.ID!=ID)
                 {
                     return NotFound(user);
                 }
