@@ -67,8 +67,8 @@ namespace WebAPI.Controllers
         }
 
         [HttpDelete("{ID}")]
-        public async Task<User> DeleteUser(int ID)
-
+       // public async Task<User> DeleteUser(int ID)
+        public IActionResult DeleteUser(int ID)
         {
             var users = new List<User>();
             using (StreamReader r = new StreamReader(path))
@@ -76,18 +76,23 @@ namespace WebAPI.Controllers
                 string json = r.ReadToEnd();
                 users = JsonConvert.DeserializeObject<List<User>>(json);
             }
-
             foreach (var user in users)
             {
+                bool isSuccsesfull = users.Remove(user);
+                string json2 = JsonConvert.SerializeObject(users, Formatting.Indented);
+                 System.IO.File.WriteAllTextAsync(path, json2);
                 if (user.ID == ID)
                 {
+                    users.Remove(user);
+                    string json = JsonConvert.SerializeObject(users, Formatting.Indented);
+                    System.IO.File.WriteAllTextAsync(path, json);
+                    return Ok(user);
 
-                    bool isSuccsesfull = users.Remove(user);
-                    string json2 = JsonConvert.SerializeObject(users, Formatting.Indented);
-                    await System.IO.File.WriteAllTextAsync(path, json2);
-                    return user;
                 }
-
+                else
+                {
+                    return NotFound(user);
+                }
             }
 
             return null;
